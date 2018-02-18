@@ -4,20 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "browserify ./examples/index.js -o ./examples/bundle.js",
     "test:deps": "dependency-check . && dependency-check . --extra --no-dev",
     "test:lint": "standard",
     "test:node": "NODE_ENV=test tape t/*.js",
     "test": "npm-run-all -s test:deps test:lint test:node"
   },
   "keywords": [],
-  "author": "",
+  "browserify": {
+    "transform": [
+      "yo-yoify"
+    ]
+  },
+  "author": "ishiduca@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "browserify": "^16.1.0",
     "dependency-check": "^3.0.0",
     "npm-run-all": "^4.1.2",
     "standard": "^10.0.3",
-    "tape": "^4.8.0"
+    "tape": "^4.8.0",
+    "yo-yoify": "^4.3.0"
   },
   "dependencies": {
     "defined": "^1.0.0",
