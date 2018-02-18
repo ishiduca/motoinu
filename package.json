@@ -1,0 +1,28 @@
+{
+  "name": "motoinu",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:deps": "dependency-check . && dependency-check . --extra --no-dev",
+    "test:lint": "standard",
+    "test:node": "NODE_ENV=test tape t/*.js",
+    "test": "npm-run-all -s test:deps test:lint test:node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^16.1.0",
+    "dependency-check": "^3.0.0",
+    "npm-run-all": "^4.1.2",
+    "standard": "^10.0.3",
+    "tape": "^4.8.0"
+  },
+  "dependencies": {
+    "defined": "^1.0.0",
+    "mississippi": "^2.0.0",
+    "xtend": "^4.0.1",
+    "yo-yo": "^1.4.1"
+  }
+}
