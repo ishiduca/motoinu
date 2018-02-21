@@ -1,14 +1,20 @@
 const {start, html} = require('../')
-const missi = require('mississippi')
-const main = html`<div id="main"></div>`
+const {through, pipe} = require('mississippi')
+const compose = require('./compose')
 
+const apps = [
+  require('./form'),
+  require('./todos')
+]
+
+const sources = start(compose(apps))
+
+const main = html`<main></main>`
 document.body.appendChild(main)
 
-const sources = start(require('./clock'))
-
-missi.pipe(
+pipe(
   sources.views(),
-  missi.through.obj((view, _, done) => {
+  through.obj((view, _, done) => {
     html.update(main, view)
     done()
   }),
