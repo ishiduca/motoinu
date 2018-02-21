@@ -7,7 +7,7 @@ const apps = [
   require('./todos')
 ]
 
-const sources = start(compose(apps))
+const sources = start(compose(apps, views => html`<main>${views}</main>`))
 
 const main = html`<main></main>`
 document.body.appendChild(main)

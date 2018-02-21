@@ -1,7 +1,8 @@
 const {through} = require('mississippi')
 const {html} = require('../')
+const defined = require('defined')
 
-module.exports = function compose (apps) {
+module.exports = function compose (apps, template) {
   return {
     init () {
       return composeState(apps.map(app => app.init()))
@@ -10,13 +11,13 @@ module.exports = function compose (apps) {
       return composeState(apps.map((app, i) => app.update(models[i], action)))
     },
     view (models, dispatch) {
-      return html`<main>
-        ${apps.map((app, i) => app.view(models[i], dispatch))}
-      </main>`
+      return defined(template, defaultTemplate)(
+        apps.map((app, i) => app.view(models[i], dispatch))
+      )
     },
     run (effects, sources) {
-      var s = through.obj()
-      var xs = []
+      const s = through.obj()
+      let xs = []
       apps.forEach((app, i) => {
         effects.filter(e => (e != null)).map(e => app.run(e, sources)).filter(x => (x != null)).forEach(x => {
           x.pipe(s, {end: false})
@@ -38,4 +39,8 @@ function composeState (states) {
     model: states.map(s => s.model),
     effect: states.some(s => !!s.effect) ? states.map(s => s.effect) : null
   }
+}
+
+function defaultTemplate (views) {
+  return html`<div>${views}</div>`
 }
