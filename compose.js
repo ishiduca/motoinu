@@ -39,7 +39,7 @@ module.exports = function compose (apps, template) {
         .forEach(function (stream) {
           stream.pipe(ts, {end: false})
           stream.once('end', function () {
-            stream.unpipe(stream)
+            stream.unpipe(ts)
             xs = xs.filter(function (x) { return x !== stream })
             if (xs.length === 0) ts.end()
           })
